@@ -3,7 +3,6 @@ package ioleo.tictactoe.domain
 sealed trait State
 
 object State {
-
   final case class Confirm(
                             action: ConfirmAction
                             , confirmed: State

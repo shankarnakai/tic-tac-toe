@@ -17,7 +17,7 @@ trait GameModeLive extends GameMode {
     def process(input: String, state: State.Game): UIO[State] =
       if (state.result != GameResult.Ongoing) UIO.succeed(State.Menu(None, MenuMessage.Empty))
       else if (isAiTurn(state))
-        opponentAi.randomMove(state.board).orDieWith(_ => new IllegalStateException) >>= (takeField(_, state))
+        opponentAi.move(state.board).orDieWith(_ => new IllegalStateException) >>= (takeField(_, state))
       else
         gameCommandParser.parse(input) >>= {
           case GameCommand.Menu       => UIO.succeed(State.Menu(Some(state), MenuMessage.Empty))
